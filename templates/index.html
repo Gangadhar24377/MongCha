@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Example</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"] {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chatbot</h1>
+    <form action="/ask" method="post">
+        <label for="question">Ask your question:</label>
+        <input type="text" id="question" name="question" required>
+        <button type="submit">Ask</button>
+    </form>
+    <div id="response"></div>
+
+    <script>
+        function sendQuestion(question) {
+            // Make AJAX request to /ask using question data
+            fetch('/ask', {
+                method: 'POST',
+                body: JSON.stringify({ question }),
+                headers: { 'Content-Type': 'application/json' }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('response').innerHTML = data.answer;
+            })
+            .catch(error => {
+                console.error(error);
+                document.getElementById('response').innerHTML = 'An error occurred.';
+            });
+        }
+
+        // Add event listener to form submit (optional)
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const question = document.getElementById('question').value;
+            sendQuestion(question);
+        });
+    
