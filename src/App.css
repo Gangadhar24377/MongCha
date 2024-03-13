@@ -1,0 +1,12 @@
+Body{
+  background-color: rgb(29, 28, 28);
+}
+
+.App {
+  background-color: aliceblue;
+  text-align: center;
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+
